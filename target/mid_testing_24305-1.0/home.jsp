@@ -77,8 +77,8 @@
 
             <!-- Show additional links based on user role -->
             <% if (role == Role.LIBRARIAN) { %>
-                <a href="/manageBooks.jsp">Manage Books</a>
-                <a href="/manageUsers.jsp">Manage Users</a>
+                <a href="BookServlet">Manage Books</a>
+                <a href="BookServlet">Manage Users</a>
             <% } else if (role == Role.STUDENT || role == Role.TEACHER) { %>
                 <a href="/borrowBooks.jsp">Borrow Books</a>
                 <a href="/myBorrowedBooks.jsp">My Borrowed Books</a>
@@ -102,7 +102,7 @@
                 <a href="/manageBooks.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Books</a>
                 <a href="/manageUsers.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Users</a>
             </div>
-            <a href="/manageUsers.jsp?populate=true" hidden="<%=  %>" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Populate Shelves and Rooms</a>
+           
         <% } else if (role == Role.STUDENT || role == Role.TEACHER) { %>
             <p class="text-lg text-center">You can borrow books and manage your borrowed items.</p>
             <div class="mt-6 text-center">

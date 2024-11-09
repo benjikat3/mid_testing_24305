@@ -7,6 +7,7 @@ import com.ben.mid_term.model.Shelf;
 import com.ben.mid_term.model.AppUser;
 import com.ben.mid_term.model.BookStatus;
 import com.ben.mid_term.model.Role;
+import com.ben.mid_term.util.RoomShelfPopulator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -38,6 +39,14 @@ public class BookServlet extends HttpServlet {
         // Fetch the logged-in AppUser and check the role
         AppUser currentUser = (AppUser) request.getSession().getAttribute("user");
         Role role = currentUser.getRole();
+        String room = request.getParameter("room");
+        if (room.equals("none")){
+            RoomShelfPopulator p = new RoomShelfPopulator();
+            p.populateRoomShelfData();
+            // Forward to the manageBooks.jsp page
+            request.getRequestDispatcher("/lib/manageBooks.jsp").forward(request, response);
+
+        }
 
         // Fetch all books to display
         List<Book> books = bookDao.showAll();
@@ -50,6 +59,7 @@ public class BookServlet extends HttpServlet {
         // Check role and restrict access if not a librarian
         if (role != Role.LIBRARIAN) {
             request.setAttribute("restricted", true);
+            
         }
 
         // Forward to the manageBooks.jsp page

@@ -14,7 +14,7 @@
     String author = "";
     String isbn = "";
     String shelfId = "";
-    int publishingYear = 2023;
+    int publishingYear = 0;
     BookStatus status = null;
 
     // Fetch all books from the database
@@ -130,7 +130,13 @@
     <!-- Manage Books Container -->
     <div class="manage-books-container">
         <h1 class="neon-text text-center mb-6">Manage Books</h1>
-        <a href="manageBook.jsp?room=none" ></a>
+        <%
+            if (shelves != null){
+                %>
+                <a href="manageBooks.jsp?room=none" >Populate room and shelves</a>
+        <%
+            }
+        %>
         <!-- Add/Edit Book Form -->
         <form id="manageBookForm" action="BookServlet" method="POST" enctype="multipart/form-data" class="space-y-4 mb-8">
             <h2 class="text-lg font-semibold"><%= bookId != null ? "Edit Book" : "Add a New Book" %></h2>
@@ -150,7 +156,7 @@
                        value="<%= (String.valueOf(publishingYear) != null) ? String.valueOf(publishingYear) : "" %>"
                        class="flex-1 p-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                 <select name="status" id="status" required
-                        value="<%= (status.name() != null) ? status.name() : "" %>"
+                        value="<%= (status != null && status.name() != null) ? status.name() : "" %>"
                         class="flex-1 p-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                     <option value="" disabled selected>Select Status</option>
                     <option value="AVAILABLE">Available</option>
