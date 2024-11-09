@@ -133,7 +133,7 @@
         <%
             if (shelves != null){
                 %>
-                <a href="manageBooks.jsp?room=none" >Populate room and shelves</a>
+                <a href="/BookServlet?room=none" >Populate room and shelves</a>
         <%
             }
         %>

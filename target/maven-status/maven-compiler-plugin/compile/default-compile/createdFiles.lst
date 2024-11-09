@@ -6,6 +6,7 @@ com\ben\mid_term\servlet\LogoutServlet.class
 com\ben\mid_term\util\LocationPopulator.class
 com\ben\mid_term\model\UserLocation.class
 com\ben\mid_term\model\AppUser.class
+com\ben\mid_term\util\RoomShelfPopulator.class
 com\ben\mid_term\servlet\LocationServlet.class
 com\ben\mid_term\dao\BookDao.class
 com\ben\mid_term\dao\MembershipDao.class
@@ -17,6 +18,7 @@ com\ben\mid_term\model\BookStatus.class
 com\ben\mid_term\model\Borrower.class
 com\ben\mid_term\dao\RoomDao.class
 com\ben\mid_term\dao\UserDao.class
+com\ben\mid_term\servlet\BookServlet.class
 com\ben\mid_term\dao\LocationDao.class
 com\ben\mid_term\model\Status.class
 com\ben\mid_term\model\MembershipType.class

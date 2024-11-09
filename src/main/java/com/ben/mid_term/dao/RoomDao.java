@@ -129,6 +129,32 @@ public class RoomDao {
         return r;
     }
     
+    
+    public Room findByRoomCode(String Code) {
+        List<Room> list = null;
+        Room r = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            Query query = session.createQuery("FROM Room r WHERE r.roomCode = :Code", Room.class);
+            query.setParameter("Code", Code);
+            list = query.list();
+            r = (list != null) ? list.get(0) : null;
+            tx.commit();
+
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            Logger.getLogger(RoomDao.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            session.close();
+        }
+
+        return r;
+    }
+    
     public List showAll() {
         List<Room> list = null;
         session = HibernateUtil.getSessionFactory().openSession();
