@@ -35,7 +35,7 @@ public class UserLocation {
     @Column(name = "location_name", nullable = false, length = 50)
     private String locationName;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id")
     private UserLocation parentLocation;
     

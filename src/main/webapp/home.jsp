@@ -1,10 +1,7 @@
 <%@page import="com.ben.mid_term.model.Role"%>
 <%@page import="com.ben.mid_term.model.AppUser"%>
 <%@page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<%
-    Role role = (Role) session.getAttribute("role");
-    AppUser user = (AppUser) session.getAttribute("user");
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +12,7 @@
         body {
             background: linear-gradient(135deg, #1f1c2c, #928dab);
             min-height: 100vh;
+            font-size: 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -76,15 +74,19 @@
             <a href="/catalog.jsp">Catalog</a>
 
             <!-- Show additional links based on user role -->
+            <%
+                Role role = (Role) session.getAttribute("role");
+                AppUser user = (AppUser) session.getAttribute("user");
+            %>
             <% if (role == Role.LIBRARIAN) { %>
                 <a href="BookServlet">Manage Books</a>
-                <a href="BookServlet">Manage Users</a>
+                <a href="ViewMemberServlet">Manage Users</a>
             <% } else if (role == Role.STUDENT || role == Role.TEACHER) { %>
-                <a href="/borrowBooks.jsp">Borrow Books</a>
-                <a href="/myBorrowedBooks.jsp">My Borrowed Books</a>
+                <a href="borrowServlet">Borrow Books</a>
+                <a href="MyBorrowedBookServlet">My Borrowed Books</a>
             <% } else if (role == Role.HOD || role == Role.DEAN || role == Role.MANAGER) { %>
-                <a href="/viewLibrary.jsp">View Library</a>
-                <a href="/viewMembers.jsp">View Members</a>
+                <a href="ViewLibraryServlet">View Library</a>
+                <a href="ViewMemberServlet">View Members</a>
             <% } %>
 
             <a href="/LogoutServlet">Logout</a>
@@ -99,21 +101,21 @@
         <% if (role == Role.LIBRARIAN) { %>
             <p class="text-lg text-center">You can manage the library's books, users, and handle member requests.</p>
             <div class="mt-6 text-center">
-                <a href="/manageBooks.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Books</a>
-                <a href="/manageUsers.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Users</a>
+                <a href="BookServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Books</a>
+                <a href="ViewMemberServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Manage Users</a>
             </div>
            
         <% } else if (role == Role.STUDENT || role == Role.TEACHER) { %>
             <p class="text-lg text-center">You can borrow books and manage your borrowed items.</p>
             <div class="mt-6 text-center">
-                <a href="/borrowBooks.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Borrow Books</a>
-                <a href="/myBorrowedBooks.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">My Borrowed Books</a>
+                <a href="BorrowServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">Borrow Books</a>
+                <a href="MyBorrowedBookServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">My Borrowed Books</a>
             </div>
         <% } else if (role == Role.HOD || role == Role.DEAN || role == Role.MANAGER) { %>
             <p class="text-lg text-center">You can view library data and member information but cannot modify it.</p>
             <div class="mt-6 text-center">
-                <a href="/viewLibrary.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">View Library</a>
-                <a href="/viewMembers.jsp" class="bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">View Members</a>
+                <a href="ViewLibraryServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">View Library</a>
+                <a href="ViewMemberServlet" class="bg-teal-500 neon-text text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">View Members</a>
             </div>
         <% } %>
     </div>

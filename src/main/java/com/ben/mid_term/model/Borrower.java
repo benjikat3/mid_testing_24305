@@ -31,17 +31,17 @@ public class Borrower {
     private int fineAmount;
 
     // Foreign key to UseR (the person borrowing the book)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private AppUser user;
 
     // Foreign key to Book (the book being borrowed)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
     // Foreign key to Shelf (where the book is borrowed from)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shelf_id", nullable = false)
     private Shelf shelf;
 

@@ -1,3 +1,5 @@
+<%@page import="com.ben.mid_term.model.AppUser"%>
+<%@page import="com.ben.mid_term.model.Role"%>
 <%@page import="com.ben.mid_term.model.BookStatus"%>
 <%@page import="java.util.UUID"%>
 <%@page import="java.util.List"%>
@@ -48,11 +50,11 @@
         body {
             background: linear-gradient(135deg, #1f1c2c, #928dab);
             min-height: 100vh;
+            margin: 0; /* Ensure no extra margins interfere with scroll */
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             color: #e0e0e0;
+            overflow-y: auto; /* Allow vertical scrolling */
         }
         .manage-books-container {
             background: rgba(34, 34, 58, 0.95);
@@ -61,6 +63,7 @@
             box-shadow: 0px 0px 20px 5px rgba(0, 255, 255, 0.7);
             width: 90vw;
             max-width: 900px;
+            margin: 2rem auto; /* Ensure proper spacing */
             animation: neon-glow 1.5s infinite alternate;
         }
         .neon-text {
@@ -84,7 +87,18 @@
             font-size: 1.2rem;
             font-weight: 600;
         }
-        .navbar a:hover {
+        .navbar {
+            width: 100%;
+            background-color: rgba(34, 34, 58, 0.95);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; /* Keep navbar visible during scrolling */
+            top: 0;
+            z-index: 1000; /* Ensure it stays on top of other content */
+        }
+         .navbar a:hover {
             text-decoration: underline;
         }
         table {
@@ -112,10 +126,10 @@
             }
         }
     </style>
+
 </head>
 <body>
 
-    <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
             <a href="/">AUCA Library</a>
@@ -123,6 +137,23 @@
         <div class="links">
             <a href="/home.jsp">Home</a>
             <a href="/catalog.jsp">Catalog</a>
+
+            <!-- Show additional links based on user role -->
+            <%
+                Role role = (Role) session.getAttribute("role");
+                AppUser user = (AppUser) session.getAttribute("user");
+            %>
+            <% if (role == Role.LIBRARIAN) { %>
+                <a href="BookServlet">Manage Books</a>
+                <a href="ViewMemberServlet">Manage Users</a>
+            <% } else if (role == Role.STUDENT || role == Role.TEACHER) { %>
+                <a href="borrowServlet">Borrow Books</a>
+                <a href="MyBorrowedBookServlet">My Borrowed Books</a>
+            <% } else if (role == Role.HOD || role == Role.DEAN || role == Role.MANAGER) { %>
+                <a href="ViewLibraryServlet">View Library</a>
+                <a href="ViewMemberServlet">View Members</a>
+            <% } %>
+
             <a href="/LogoutServlet">Logout</a>
         </div>
     </div>
@@ -130,13 +161,6 @@
     <!-- Manage Books Container -->
     <div class="manage-books-container">
         <h1 class="neon-text text-center mb-6">Manage Books</h1>
-        <%
-            if (shelves != null){
-                %>
-                <a href="/BookServlet?room=none" >Populate room and shelves</a>
-        <%
-            }
-        %>
         <!-- Add/Edit Book Form -->
         <form id="manageBookForm" action="BookServlet" method="POST" enctype="multipart/form-data" class="space-y-4 mb-8">
             <h2 class="text-lg font-semibold"><%= bookId != null ? "Edit Book" : "Add a New Book" %></h2>
@@ -154,10 +178,10 @@
             <div class="flex flex-col md:flex-row md:space-x-4">
                 <input type="number" name="publicationYear" id="publicationYear" placeholder="Publication Year" required
                        value="<%= (String.valueOf(publishingYear) != null) ? String.valueOf(publishingYear) : "" %>"
-                       class="flex-1 p-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                       class="flex-1 p-2 bg-gray-800 text-white border border-gray-500 p-3 rounded focus:outline-none focus:border-teal-400">
                 <select name="status" id="status" required
                         value="<%= (status != null && status.name() != null) ? status.name() : "" %>"
-                        class="flex-1 p-2 border border-gray-300 rounded focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                        class="flex-1 bg-gray-800 text-white border border-gray-500 p-3 rounded focus:outline-none focus:border-teal-400">
                     <option value="" disabled selected>Select Status</option>
                     <option value="AVAILABLE">Available</option>
                     <option value="BORROWED">Borrowed</option>
@@ -171,21 +195,15 @@
                 <option value="" disabled selected>Select Shelf Category</option>
                 <% if (shelves != null) {
                     for (Shelf shelf : shelves) { %>
-                        <option value="<%= shelf.getShelfId().toString() %>" <%= shelf.getShelfId().toString().equals(shelfId) ? "selected" : "" %>>
-                            <%= shelf.getBookCategory() %> (Room: <%= shelf.getRoom().getRoomCode() %>)
+                        <option value="<%= shelf.getShelfId() %>" <%= shelf.getShelfId().toString().equals(shelfId) ? "selected" : "" %>>
+                            <%= shelf.getBookCategory() %> (Room: <%= shelf.getRoom().getRoomCode() %> )
                         </option>
                 <% } } %>
             </select>
 
-            <!-- Book Cover Upload -->
-            <div class="flex flex-col space-y-2">
-                <label class="text-teal-400">Upload Book Cover</label>
-                <input type="file" name="bookCover" accept="image/*" class="w-full bg-gray-800 text-white border border-gray-500 p-3 rounded">
-            </div>
-
             <!-- Submit Button -->
             <button type="submit" name="action" value="<%= bookId != null ? "updateBook" : "addBook" %>"
-                    class="w-full bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">
+                    class="w-full neon-text bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">
                 <%= bookId != null ? "Update Book" : "Add Book" %>
             </button>
         </form>
@@ -209,7 +227,7 @@
                             <td><%= book.getTitle() %></td>
                             <td><%= book.getAuthor() %></td>
                             <td><%= book.getIsbn() %></td>
-                            <td><%= book.getShelf() != null ? book.getShelf().getBookCategory() : "Not Assigned" %></td>
+                            <td><%= book.getShelf() != null ? book.getBookCategory() : "Not Assigned" %></td>
                             <td>
                                 <!-- Edit Book Link -->
                                 <a href="manageBooks.jsp?id=<%= book.getBookId()%>&action=edit" class="text-teal-400 hover:underline">Edit</a> |

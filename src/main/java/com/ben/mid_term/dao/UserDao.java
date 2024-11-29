@@ -188,7 +188,7 @@ public class UserDao {
 
         try {
             tx = session.beginTransaction();
-            list = session.createQuery("FROM UseR", AppUser.class).list();
+            list = session.createQuery("FROM AppUser", AppUser.class).list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

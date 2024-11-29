@@ -25,6 +25,22 @@
         <servlet-name>BookServlet</servlet-name>
         <servlet-class>com.ben.mid_term.servlet.BookServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BorrowServlet</servlet-name>
+        <servlet-class>com.ben.mid_term.servlet.BorrowServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MyBorrowedBookServlet</servlet-name>
+        <servlet-class>com.ben.mid_term.servlet.MyBorrowedBookServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewMemberServlet</servlet-name>
+        <servlet-class>com.ben.mid_term.servlet.ViewMemberServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewLibraryServlet</servlet-name>
+        <servlet-class>com.ben.mid_term.servlet.ViewLibraryServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>SignupServlet</servlet-name>
         <url-pattern>/SignupServlet</url-pattern>
@@ -44,6 +60,22 @@
     <servlet-mapping>
         <servlet-name>BookServlet</servlet-name>
         <url-pattern>/BookServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BorrowServlet</servlet-name>
+        <url-pattern>/BorrowServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MyBorrowedBookServlet</servlet-name>
+        <url-pattern>/MyBorrowedBookServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewMemberServlet</servlet-name>
+        <url-pattern>/ViewMemberServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewLibraryServlet</servlet-name>
+        <url-pattern>/ViewLibraryServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

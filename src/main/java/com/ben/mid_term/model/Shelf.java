@@ -31,7 +31,7 @@ public class Shelf {
     private int initialStock;
 
     // Foreign Key to Room
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id", nullable=false)
     private Room room;
 

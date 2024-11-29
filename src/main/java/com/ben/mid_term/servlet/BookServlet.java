@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-@WebServlet("/BookServlet")
+
 @MultipartConfig(
     fileSizeThreshold = 1024 * 1024 * 2, // 2MB
     maxFileSize = 1024 * 1024 * 10,      // 10MB
@@ -40,12 +40,11 @@ public class BookServlet extends HttpServlet {
         AppUser currentUser = (AppUser) request.getSession().getAttribute("user");
         Role role = currentUser.getRole();
         String room = request.getParameter("room");
-        if (room.equals("none")){
-            RoomShelfPopulator p = new RoomShelfPopulator();
-            p.populateRoomShelfData();
+        
+        if (room != null && room.equals("none")){
+            RoomShelfPopulator populateNow = new RoomShelfPopulator();
+            populateNow.populateRoomShelfData();
             // Forward to the manageBooks.jsp page
-            request.getRequestDispatcher("/lib/manageBooks.jsp").forward(request, response);
-
         }
 
         // Fetch all books to display
@@ -59,11 +58,9 @@ public class BookServlet extends HttpServlet {
         // Check role and restrict access if not a librarian
         if (role != Role.LIBRARIAN) {
             request.setAttribute("restricted", true);
-            
         }
-
         // Forward to the manageBooks.jsp page
-        request.getRequestDispatcher("/lib/manageBooks.jsp").forward(request, response);
+        request.getRequestDispatcher("/manageBooks.jsp").forward(request, response);
     }
 
     @Override
@@ -83,8 +80,8 @@ public class BookServlet extends HttpServlet {
             deleteBook(request, response);
         }
 
-        // Redirect back to the GET method to refresh the page
-        response.sendRedirect("BookServlet");
+        // Forward to the manageBooks.jsp page
+        request.getRequestDispatcher("/manageBooks.jsp").forward(request, response);
     }
 
     private void addBook(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -101,6 +98,7 @@ public class BookServlet extends HttpServlet {
 
         Shelf shelf = shelfDao.findShelfById(shelfId);
         Book newBook = new Book();
+        newBook.setTitle(title);
         newBook.setAuthor(author);
         newBook.setBookCategory(shelf.getBookCategory());
         newBook.setIsbn(isbn);

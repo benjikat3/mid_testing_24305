@@ -1,5 +1,6 @@
 com\ben\mid_term\model\Shelf.class
 com\ben\mid_term\model\Role.class
+com\ben\mid_term\dao\BorrowerDao.class
 com\ben\mid_testing_24305\JakartaRestConfiguration.class
 com\ben\mid_term\model\Book.class
 com\ben\mid_term\servlet\LogoutServlet.class
@@ -13,6 +14,7 @@ com\ben\mid_term\dao\MembershipDao.class
 com\ben\mid_term\dao\MembershipTypeDao.class
 com\ben\mid_term\model\LocationType.class
 com\ben\mid_term\model\Gender.class
+com\ben\mid_term\servlet\MyBorrowedBookServlet.class
 com\ben\mid_term\util\HibernateUtil.class
 com\ben\mid_term\model\BookStatus.class
 com\ben\mid_term\model\Borrower.class
@@ -20,10 +22,13 @@ com\ben\mid_term\dao\RoomDao.class
 com\ben\mid_term\dao\UserDao.class
 com\ben\mid_term\servlet\BookServlet.class
 com\ben\mid_term\dao\LocationDao.class
+com\ben\mid_term\servlet\ViewMemberServlet.class
+com\ben\mid_term\servlet\BorrowServlet.class
 com\ben\mid_term\model\Status.class
 com\ben\mid_term\model\MembershipType.class
 com\ben\mid_term\servlet\SignupServlet.class
 com\ben\mid_term\model\Person.class
+com\ben\mid_term\servlet\ViewLibraryServlet.class
 com\ben\mid_testing_24305\resources\JakartaEE8Resource.class
 com\ben\mid_term\dao\ShelfDao.class
 com\ben\mid_term\model\Room.class

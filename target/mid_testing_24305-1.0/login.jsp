@@ -38,6 +38,7 @@
             justify-content: space-between;
             align-items: center;
             position: absolute;
+            gap: 4px;
             top: 0;
         }
         .navbar a {
@@ -113,7 +114,7 @@
 
             <!-- Submit Button -->
             <button type="submit" name="action" value="login"
-                    class="w-full bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">
+                    class="w-full neon-text bg-teal-500 text-black font-semibold p-3 rounded hover:bg-teal-400 transition-colors">
                 Log In
             </button>
 

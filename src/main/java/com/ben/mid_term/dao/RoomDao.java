@@ -140,7 +140,9 @@ public class RoomDao {
             Query query = session.createQuery("FROM Room r WHERE r.roomCode = :Code", Room.class);
             query.setParameter("Code", Code);
             list = query.list();
-            r = (list != null) ? list.get(0) : null;
+            if(list != null && !list.isEmpty()){
+                r = list.get(0);
+            }
             tx.commit();
 
         } catch (HibernateException e) {

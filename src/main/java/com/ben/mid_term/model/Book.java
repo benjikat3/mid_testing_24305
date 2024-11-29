@@ -39,7 +39,7 @@ public class Book {
     private BookStatus status;
 
     // Foreign Key to Shelf
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "shelf_id", nullable = false)
     private Shelf shelf;
 
